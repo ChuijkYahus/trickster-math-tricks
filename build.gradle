@@ -1,5 +1,5 @@
 plugins {
-	id 'fabric-loom' version '1.8-SNAPSHOT'
+	id 'fabric-loom' version '1.15-SNAPSHOT'
 	id 'maven-publish'
 	id "com.modrinth.minotaur" version "2.+"
 }
@@ -20,14 +20,6 @@ repositories {
 	mavenLocal()
 
 	maven {
-		url "https://maven.pkg.github.com/TheJebForge/trickster-lisp"
-		credentials {
-			username = project.findProperty("gpr.user") ?: System.getenv("USERNAME")
-			password = project.findProperty("gpr.key") ?: System.getenv("TOKEN")
-		}
-	}
-
-	maven {
 		url 'https://maven.enjarai.dev/releases'
 	}
 	maven {
@@ -35,6 +27,14 @@ repositories {
 	}
 
 	maven { url 'https://maven.wispforest.io/releases/' }
+
+	maven {
+		name = "Modrinth"
+		url = "https://api.modrinth.com/maven"
+		content {
+			includeGroup "maven.modrinth"
+		}
+	}
 }
 
 loom {
@@ -59,8 +59,6 @@ dependencies {
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 
 	modImplementation "dev.enjarai:trickster:${project.trickster_version}"
-
-	modImplementation "com.thejebforge.trickster_lisp:trickster_lisp:${project.lisp_version}"
 
 	dependencies {
 		modImplementation "io.wispforest:owo-lib:${project.owo_version}"

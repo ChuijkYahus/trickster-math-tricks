@@ -1,16 +1,9 @@
 package com.thejebforge.trickster_math_tricks.fragment;
 
 import dev.enjarai.trickster.spell.Fragment;
-import dev.enjarai.trickster.spell.blunder.BlunderException;
-import dev.enjarai.trickster.spell.blunder.IncompatibleTypesBlunder;
-import dev.enjarai.trickster.spell.fragment.AddableFragment;
-import dev.enjarai.trickster.spell.fragment.DivisibleFragment;
-import dev.enjarai.trickster.spell.fragment.FragmentType;
-import dev.enjarai.trickster.spell.fragment.MultiplicableFragment;
-import dev.enjarai.trickster.spell.fragment.NumberFragment;
-import dev.enjarai.trickster.spell.fragment.SubtractableFragment;
-import dev.enjarai.trickster.spell.fragment.VectorFragment;
-import dev.enjarai.trickster.spell.trick.Tricks;
+import dev.enjarai.trickster.spell.exception.TricksterEngineException;
+import dev.enjarai.trickster.spell.exception.blunder.IncompatibleTypesBlunder;
+import dev.enjarai.trickster.spell.fragment.*;
 import io.wispforest.endec.Endec;
 import io.wispforest.endec.StructEndec;
 import io.wispforest.endec.impl.StructEndecBuilder;
@@ -66,16 +59,16 @@ public record QuaternionFragment(Quaterniondc quaternion) implements Fragment,
     }
 
     @Override
-    public AddableFragment add(Fragment fragment) throws BlunderException {
+    public AddableFragment add(Fragment fragment) throws TricksterEngineException {
         if (fragment instanceof QuaternionFragment(Quaterniondc quat)) {
             return new QuaternionFragment(quaternion.add(quat, new Quaterniond()));
         }
 
-        throw new IncompatibleTypesBlunder(Tricks.ADD);
+        throw new IncompatibleTypesBlunder();
     }
 
     @Override
-    public MultiplicableFragment multiply(Fragment fragment) throws BlunderException {
+    public MultiplicableFragment multiply(Fragment fragment) throws TricksterEngineException {
         if (fragment instanceof QuaternionFragment(Quaterniondc quat)) {
             return new QuaternionFragment(quaternion.mul(quat, new Quaterniond()));
         }
@@ -88,24 +81,24 @@ public record QuaternionFragment(Quaterniondc quaternion) implements Fragment,
             return new VectorFragment(quaternion.transform(other.vector(), new Vector3d()));
         }
 
-        throw new IncompatibleTypesBlunder(Tricks.MULTIPLY);
+        throw new IncompatibleTypesBlunder();
     }
 
     @Override
-    public DivisibleFragment divide(Fragment fragment) throws BlunderException {
+    public DivisibleFragment divide(Fragment fragment) throws TricksterEngineException {
         if (fragment instanceof QuaternionFragment(Quaterniondc quat)) {
             return new QuaternionFragment(quaternion.div(quat, new Quaterniond()));
         }
 
-        throw new IncompatibleTypesBlunder(Tricks.DIVIDE);
+        throw new IncompatibleTypesBlunder();
     }
 
     @Override
-    public SubtractableFragment subtract(Fragment fragment) throws BlunderException {
+    public SubtractableFragment subtract(Fragment fragment) throws TricksterEngineException {
         if (fragment instanceof QuaternionFragment(Quaterniondc quat)) {
             return new QuaternionFragment(quaternion.add(quat.mul(-1, new Quaterniond()), new Quaterniond()));
         }
 
-        throw new IncompatibleTypesBlunder(Tricks.SUBTRACT);
+        throw new IncompatibleTypesBlunder();
     }
 }

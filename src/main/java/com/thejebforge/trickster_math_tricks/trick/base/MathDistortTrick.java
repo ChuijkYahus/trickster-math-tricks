@@ -4,7 +4,7 @@ import dev.enjarai.trickster.spell.EvaluationResult;
 import dev.enjarai.trickster.spell.Fragment;
 import dev.enjarai.trickster.spell.Pattern;
 import dev.enjarai.trickster.spell.SpellContext;
-import dev.enjarai.trickster.spell.blunder.BlunderException;
+import dev.enjarai.trickster.spell.exception.TricksterEngineException;
 import dev.enjarai.trickster.spell.type.Signature;
 
 import java.util.LinkedHashMap;
@@ -32,7 +32,7 @@ public abstract class MathDistortTrick<T extends MathDistortTrick<T>> extends Ma
     }
 
     @Override
-    public EvaluationResult activate(SpellContext ctx, List<Fragment> fragments) throws BlunderException {
+    public EvaluationResult activate(SpellContext ctx, List<Fragment> fragments) throws TricksterEngineException {
         var fragmentArray = fragments.toArray(new Fragment[0]);
         EvaluationResult result = cache.get(fragmentArray);
 
