@@ -39,8 +39,8 @@ public class ModRevisions {
         }
     }).buildAndRegister();
 
-    public static Revision MAIN_REVISION = Revisions.register(
-            TricksterMathTricks.id("main_revision"), new MathLibRevision()
+    public static Revision MAIN_REVISION = Registry.register(
+            Revisions.REGISTRY, TricksterMathTricks.id("main_revision"), new MathLibRevision()
     );
 
     public static Revision PI_CONSTANT = register("pi", new ConstantRevision(
